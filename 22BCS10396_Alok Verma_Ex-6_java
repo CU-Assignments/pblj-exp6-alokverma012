@@ -1,9 +1,9 @@
-Aim: Develop Java programs using lambda expressions and stream operations for sorting, filtering, and processing large datasets efficiently.
+# Aim: Develop Java programs using lambda expressions and stream operations for sorting, filtering, and processing large datasets efficiently.
 
 
-Easy Level:
-Write a program to sort a list of Employee objects (name, age, salary) using lambda expressions.
-Program Code: 
+//Easy Level:
+//Write a program to sort a list of Employee objects (name, age, salary) using lambda expressions.
+// Programming Code: 
 import java.util.*;
 
 class Employee {
@@ -72,10 +72,10 @@ public class EmployeeSorting {
 
 
 
-# Medium Level:
-Create a program to use lambda expressions and stream operations to filter students scoring above 75%, sort them by marks, and display their names.
+// Medium Level:
+//Create a program to use lambda expressions and stream operations to filter students scoring above 75%, sort them by marks, and display their names.
+//Programming COde:
 
-# Programming COde:
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -142,10 +142,11 @@ public class StudentFilter {
 
 
 
-# Hard Level:
-Write a Java program to process a large dataset of products using streams. Perform operations such as grouping products by category, finding the most expensive product in each category, and calculating the average price of all products.
+// Hard Level:
+// Write a Java program to process a large dataset of products using streams. Perform operations such as grouping products by category, finding the most expensive product in each category, and calculating the average price of all products.
 
-Programming Code:
+// Programming Code:
+
 import java.util.*;
 import java.util.stream.*;
 
