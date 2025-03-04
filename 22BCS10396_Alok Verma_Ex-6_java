@@ -1,0 +1,214 @@
+Aim: Develop Java programs using lambda expressions and stream operations for sorting, filtering, and processing large datasets efficiently.
+
+
+Easy Level:
+Write a program to sort a list of Employee objects (name, age, salary) using lambda expressions.
+Program Code: 
+import java.util.*;
+
+class Employee {
+    String name;   
+    int age;       
+    double salary; 
+
+    // Constructor to initialize Employee object
+      Employee(String name, int age, double salary) {
+       this.name = name;
+       this.age = age;
+     this.salary = salary;
+    }
+
+    
+
+    public String toString() {
+        return name + " - Age: " + age + ", Salary: " + salary;
+    }
+}
+
+// Main class to handle employee sorting
+public class EmployeeSorting {
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        
+        System.out.print("Enter number of employees: ");
+        int n = scanner.nextInt(); 
+        scanner.nextLine(); 
+
+        // Creating a list to store Employee objects
+        List<Employee> employees = new ArrayList<>();
+
+        // Loop to input employee details
+        for (int i = 0; i < n; i++) {
+        System.out.print("Enter name: ");
+            String name = scanner.nextLine(); 
+            
+          System.out.print("Enter age: ");
+            int age = scanner.nextInt(); 
+            
+            System.out.print("Enter salary: ");
+         double salary = scanner.nextDouble(); 
+            scanner.nextLine(); 
+
+            // Creating an Employee object and adding it to the list
+            employees.add(new Employee(name, age, salary));
+        }
+
+        // Sorting the employees list based on salary in ascending order
+        employees.sort(Comparator.comparing(e -> e.salary));
+
+        
+    System.out.println("\nSorted Employees:");
+        employees.forEach(System.out::println); // Using method reference to print each employee
+
+        scanner.close(); 
+    }
+}
+
+
+
+
+
+
+
+# Medium Level:
+Create a program to use lambda expressions and stream operations to filter students scoring above 75%, sort them by marks, and display their names.
+
+# Programming COde:
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Student {
+    String name;
+    double marks;
+
+    // Constructor
+    Student(String name, double marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    // Getter methods
+    public String getName() {
+        return name;
+    }
+
+    public double getMarks() {
+        return marks;
+    }
+}
+
+public class StudentFilter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Taking user input for number of students
+        System.out.print("Enter number of students: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        List<Student> students = new ArrayList<>();
+
+        // Taking student details as input
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter marks: ");
+            double marks = scanner.nextDouble();
+            scanner.nextLine(); // Consume newline
+
+            students.add(new Student(name, marks));
+        }
+
+        // Using streams to filter, sort, and display student names
+        List<String> topStudents = students.stream()
+            .filter(s -> s.getMarks() > 75) // Filtering students with marks > 75%
+            .sorted(Comparator.comparingDouble(Student::getMarks).reversed()) // Sorting by marks in descending order
+            .map(Student::getName) // Extracting names
+            .collect(Collectors.toList()); // Collecting names into a list
+
+        // Displaying the result
+        System.out.println("\nStudents scoring above 75% sorted by marks:");
+        topStudents.forEach(System.out::println);
+
+        scanner.close(); // Closing the scanner
+    }
+}
+
+
+
+
+
+
+
+# Hard Level:
+Write a Java program to process a large dataset of products using streams. Perform operations such as grouping products by category, finding the most expensive product in each category, and calculating the average price of all products.
+
+Programming Code:
+import java.util.*;
+import java.util.stream.*;
+
+class Product {
+    String name, category;
+    double price;
+
+    Product(String name, String category, double price) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + category + ") - Price: " + price;
+    }
+}
+
+public class ProductProcessing {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter number of products: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        List<Product> products = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter product name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter category: ");
+            String category = scanner.nextLine();
+            System.out.print("Enter price: ");
+            double price = scanner.nextDouble();
+            scanner.nextLine(); // Consume newline
+            products.add(new Product(name, category, price));
+        }
+
+        // Grouping by category
+        Map<String, List<Product>> groupedByCategory = products.stream()
+            .collect(Collectors.groupingBy(p -> p.category));
+
+        // Finding the most expensive product in each category
+        Map<String, Optional<Product>> mostExpensiveByCategory = products.stream()
+            .collect(Collectors.groupingBy(p -> p.category, 
+                     Collectors.maxBy(Comparator.comparing(p -> p.price))));
+
+        // Calculating average price
+        double averagePrice = products.stream()
+            .mapToDouble(p -> p.price)
+            .average()
+            .orElse(0);
+
+        System.out.println("\nGrouped by category:");
+        groupedByCategory.forEach((category, list) -> {
+            System.out.println(category + " -> " + list);
+        });
+
+        System.out.println("\nMost expensive product in each category:");
+        mostExpensiveByCategory.forEach((category, product) -> 
+            System.out.println(category + " -> " + product.get()));
+        
+        System.out.println("\nAverage price of all products: " + averagePrice);
+    }
+}
